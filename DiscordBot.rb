@@ -173,11 +173,11 @@ bot.run :async
       gmail = Gmail.new(USERNAME,PASSWORD)
       mails =  gmail.mailbox("Label").emails.each do |mail|
       if !mail.text_part && !mail.html_part
-        bot.send_message(channel_id=277358128939532290, mail.body.decoded.encode("UTF-8", mail.charset))
+        bot.send_message(channel_id=, mail.body.decoded.encode("UTF-8", mail.charset))
       elsif mail.text_part
-        bot.send_message(channel_id=277358128939532290, mail.text_part.decoded)
+        bot.send_message(channel_id=, mail.text_part.decoded)
       elsif mail.html_part
-        bot.send_message(channel_id=277358128939532290, mail.html_part.decoded)
+        bot.send_message(channel_id=, mail.html_part.decoded)
       end 
       mail.delete!
     end
