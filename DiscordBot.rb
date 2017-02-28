@@ -63,7 +63,6 @@ bot.command(:hwt, description: "釧路の今日の天気予報を表示します
 end
 	#What Day
 bot.command(:wdi, description: "今日が何日か") do |event|
-  time = Time.now + (3600 * 2)
   tg = time.strftime("%Y/%m/%d :%A")
   event.respond "#{tg}"
 end
