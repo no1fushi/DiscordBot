@@ -2,7 +2,9 @@ puts "Loading require"
 require "discordrb"
 require "json"
 require "open-uri"
-require 'gmail'
+require "gmail"
+require "net/ping"
+require "date"
 puts "Loading require -Done!"
 
 puts "Loading bot object"
@@ -12,8 +14,8 @@ puts "Loading bot object -Done!"
 puts "set permission"
 ownid = YourID
 bot.set_user_permission ownid, 1
-USERNAME = 'Gmail'
-PASSWORD = 'GmailPass'
+USERNAME = "Gmail"
+PASSWORD = "GmailPass"
 puts "set permission -Done!"
 
 #func
@@ -72,6 +74,18 @@ bot.command(:wti, description: "今何時か") do |event|
     tg = time.strftime("%H:%M:%S")
     event.respond "#{tg}"
 end
+	#ping
+bot.command(:ping, description:"!ping hostname") do |event, host|
+   time = DateTime.now
+   now = "#{time.hour}:#{time.minute}:#{time.second}"
+   pi = Net::Ping::External.new(host);
+   if pi.ping?
+      event.respond "#{now} PING OK: #{host}"
+   else
+      event.respond "#{now} PING NO: #{host}"
+   end
+end
+
 	#Penis
 bot.command(:ちんちん, description: "対策(ランダム)") do |event|
  rand = rand(6)
