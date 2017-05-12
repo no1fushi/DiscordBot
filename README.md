@@ -24,6 +24,6 @@
   
 ### discheck.sh
 #### **Function** 
-+ DiscorBot.rbの生死を確認する
++ crontabと併用することで定期的にDiscorBot.rbの生死を確認する
 + 死んでいたら再起動する
 + 死んでいたらメールを送る
