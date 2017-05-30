@@ -25,7 +25,8 @@ def execute_each_sec(sleep_sec)
 end
 
 #System
-	#kill
+
+#kill
 bot.command(:kill,permission_level: 1,description:"ボットを終了します[OwnerOnly]", usage: "<<kill") do |event|
   puts "called kill command"
   bot.send_message(channel_id=, "Shutting down...")
@@ -33,7 +34,13 @@ bot.command(:kill,permission_level: 1,description:"ボットを終了します[O
   bot.stop
 end
 
-	#Description
+#del
+bot.command(:del,permission_level: 1,description:"!del idの形で権限のある人のみidまでの投稿を全削除できます") do |event,id|
+    message = event.channel.history(100).take_while { |h| h.id != id.to_i }
+    event.channel.delete_messages message
+end
+
+#Description
 bot.command(:hello, description: "このボットの説明") do |event| 
   event.respond "こんにちはかとぼっとです。"
   event.respond "管理者のサーバーが起動してるときのみ有効です。"
@@ -45,12 +52,14 @@ bot.command(:hello, description: "このボットの説明") do |event|
   event.respond "!word で反応する単語の一覧を表示します"
 end
 
-	#reaction bot word list
+#reaction bot word list
 bot.command(:word, description: "反応する単語一覧(実装順)") do |event|
-  event.respond "含まれていたら反応するワード"
-  event.respond "嘘つき,せっかち,ガルパン,ごちうさ,ココア,幻想,木原,乳首,草,淫夢"
-  event.respond "その単語のみでないと反応しないワード"
-  event.respond "離席,落ち,おかえり"
+  event.respond "含まれていたら反応するワード(全チャンネル)"
+  event.respond "ぬるぽ,草,YES,脱糞,嘘つき,せっかち,乳首"
+  event.respond "含まれていたら反応するワード(botの返信がbotチャンネル)"
+  event.respond "ガルパン,ごちうさ,ココア,幻想,木原,淫夢"
+  event.respond "その単語のみでないと反応しないワード(全チャンネル)"
+  event.respond "離席,落ち,おかえり,ただいま"
 end
 
 #command bot
@@ -116,35 +125,27 @@ end
 bot.command(:うんち, description: "汚い") do |event|
   event.respond "うんちして"
 end
-
-#including reaction bot
 	
+#including reaction bot
+bot.message(containing:"ぬるぽ") do |event|
+  event.respond "ガッ"
+end
+
+bot.message(containing:"YES") do |event|
+  event.respond "高須クリニック"
+end
+
+bot.message(containing:"脱糞") do |event|
+  event.respond "あああああああああああああああああああああああああああああああ!!!!!!!!!"
+  event.respond "ﾌﾞﾘﾌﾞﾘﾌﾞﾘﾌﾞﾘｭﾘｭﾘｭﾘｭﾘｭﾘｭ!!!!ﾌﾞﾂﾁﾁﾌﾞﾌﾞﾌﾞﾁﾁﾁﾁﾌﾞﾘﾘｨﾘﾌﾞﾌﾞﾌﾞﾌﾞｩｩｩｩｯｯｯ!!!!!!!"
+end
+
 bot.message(containing:"嘘つき") do |event|
   event.respond "ホモは嘘つき"
 end
 
 bot.message(containing:"せっかち") do |event|
   event.respond "ホモはせっかち"
-end
-
-bot.message(containing:"ガルパン") do |event|
-  event.respond "ガルパンはいいゾー"
-end
-
-bot.message(containing:"幻想") do |event|
-  event.respond "その幻想をぶち殺す!!"
-end
-
-bot.message(containing:"木原") do |event|
-  event.respond "木ィィィ原くゥゥゥゥゥゥゥゥン!!"
-end
-
-bot.message(containing:"ごちうさ") do |event|
-  event.respond "あぁ^～心がぴょんぴょんするんじゃぁ^～"
-end
-
-bot.message(containing:"ココア") do |event|
-  event.respond "0言0́*)<ヴェアアアアアアアア"
 end
 
 bot.message(containing:"乳首") do |event|
@@ -155,8 +156,24 @@ bot.message(containing:"草") do |event|
   event.respond "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
 end
 
-bot.message(containing:"淫夢") do |event|
-  event.respond "114514"
+bot.message(containing:"ガルパン") do |event|
+  bot.send_message(channel_id=, "ガルパンはいいゾー")
+end
+
+bot.message(containing:"幻想") do |event|
+  bot.send_message(channel_id=, "その幻想をぶち殺す!!")
+end
+
+bot.message(containing:"木原") do |event|
+  bot.send_message(channel_id=, "木ィィィ原くゥゥゥゥゥゥゥゥン!!")
+end
+
+bot.message(containing:"ごちうさ") do |event|
+  bot.send_message(channel_id=, "あぁ^～心がぴょんぴょんするんじゃぁ^～")
+end
+
+bot.message(containing:"ココア") do |event|
+  bot.send_message(channel_id=, "0言0́*)<ヴェアアアアアアアア")
 end
 
 #a word reaction bot
@@ -172,6 +189,10 @@ end
 bot.message(with_text: "おかえり") do |event|
   event.respond "おかえりー"
 end
+bot.message(with_text: "ただいま") do |event|
+  event.respond "おかえりー"
+end
+
 
 bot.run :async
 
